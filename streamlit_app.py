@@ -186,6 +186,7 @@ if mode == "Single Degree of Freedom System (1DOF)":
 
     # Affichage dans Streamlit
     with col_right:
+        st.markdown("<div style='height: 50px;'></div>", unsafe_allow_html=True)
         st.image(gif_path)
 
 # === 2 DOF Model ===
