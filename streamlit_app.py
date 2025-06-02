@@ -94,8 +94,8 @@ if mode == "Single Degree of Freedom System (1DOF)":
     mass_size = 0.2
     l0 = X * ampl + mass_size / 2 + clearance
 
-    y_sol = X * np.sin(omega_anim * t/slowdown)
-    y_m = l0+y_sol + X * (ampl-1) * np.sin(omega_anim * t/slowdown)
+    y_sol = X * np.cos(omega_anim * t/slowdown)
+    y_m = l0+y_sol + X * (ampl-1) * np.cos(omega_anim * t/slowdown)
 
     fig, ax = plt.subplots(figsize=(4, 4))
     ax.set_xlim(-0.6, 0.6)
@@ -237,7 +237,7 @@ else:
 
     # === Déplacements ===
     mass_size = 0.15
-    y_sol = X * np.sin(omega * t/slowdown)
+    y_sol = X * np.cos(omega * t/slowdown)
     X1 = X * T_X1_over_Xs(k1, k2, m1, m2, omega, c1, c2)
     X2 = X * T_X2_over_Xs(k1, k2, m1, m2, omega, c1, c2)
     # Amplitudes maximales absolues
@@ -266,9 +266,9 @@ else:
     # On prend le max des deux
     l1 = max(l1_collision_entre_masses, l1_collision_sol)
 
-    y1_raw = y_sol + np.real(X1 * np.exp(1j * omega * t / slowdown)) + l1
+    y1_raw = y_sol + np.real((X1-X) * np.exp(1j * omega * t / slowdown)) + l1
 
-    y2_raw = y1_raw + np.real(X2 * np.exp(1j * omega * t / slowdown)) + l1
+    y2_raw = y1_raw + np.real((X2-X1) * np.exp(1j * omega * t / slowdown)) + l1
 
     display_height = 1
     amplitude_total = np.max(y2_raw) - np.min(y_sol)
@@ -276,7 +276,7 @@ else:
 
 
 
-    y1 = y_sol+  np.real(X1 * np.exp(1j * omega * t / slowdown)) + l1
+    y1 = y_sol+  np.real((X1-X) * np.exp(1j * omega * t / slowdown)) + l1
     y2 = y1 + np.real((X2 - X1) * np.exp(1j * omega * t / slowdown)) + l1
     y_sol = scale_display * y_sol
     y1= scale_display * y1
